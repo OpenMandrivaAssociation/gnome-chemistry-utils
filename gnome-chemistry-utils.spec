@@ -31,6 +31,7 @@ BuildRequires:  gettext-devel
 BuildRequires:  desktop-file-utils
 BuildRequires:  chemical-mime-data
 BuildRequires:	bodr
+BuildRequires:	gnome-doc-utils
 Requires:       chemical-mime-data
 Requires:	bodr
 Provides:	gcu = %{version}-%{release}
