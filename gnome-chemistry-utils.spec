@@ -1,5 +1,5 @@
-%define version 0.6.4
-%define release %mkrel 2
+%define version 0.6.5
+%define release %mkrel 1
 
 %define major 	0
 %define libname %mklibname gcu
@@ -18,7 +18,7 @@ Source0:	http://savannah.nongnu.org/download/gchemutils/%{name}-%version.tar.bz2
 BuildRequires:	libglade2.0-devel
 BuildRequires:	libgnomeprint-devel
 BuildRequires:	libgtkglext-devel
-BuildRequires:	goffice21-devel
+BuildRequires:	libgoffice-devel
 BuildRequires:	openbabel-devel >= 1.100.1
 BuildRequires:	libgnomeui2-devel
 BuildRequires:	libgnomeprintui2-2-devel
