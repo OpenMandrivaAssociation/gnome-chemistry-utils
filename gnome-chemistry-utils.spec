@@ -1,8 +1,10 @@
-%define version 0.6.5
+%define version 0.7.96
 %define release %mkrel 1
 
 %define major 	0
 %define libname %mklibname gcu
+
+%define __libtoolize /bin/true
 
 Summary:	Backend for Gnome chemistry applications
 Name:		gnome-chemistry-utils
@@ -28,7 +30,9 @@ BuildRequires:  perl-XML-Parser
 BuildRequires:  gettext-devel
 BuildRequires:  desktop-file-utils
 BuildRequires:  chemical-mime-data
+BuildRequires:	bodr
 Requires:       chemical-mime-data
+Requires:	bodr
 Provides:	gcu = %{version}-%{release}
 Provides:	gchemutils = %{version}-%{release}
 Obsoletes:	gcu
@@ -85,14 +89,12 @@ developing chemistry related programs using %{name}.
 %setup -q
 
 %build
-./configure --libdir=%_libdir --datadir=%_datadir --disable-rpath --enable-static=yes --disable-update-databases --disable-mozilla-plugin
-#perl -pi -e 's@^(sys_lib_dlsearch_path_spec="/lib /usr/lib)"@$1 /usr/X11R6/%{_lib}"@' libtool
-#perl -p -i -e 's|install-data-hook|||g' Makefile
+%configure2_5x --disable-rpath --enable-static=yes --disable-update-databases --disable-mozilla-plugin --disable-schemas-install
 %make
 
 %install
 rm -rf %{buildroot}
-%makeinstall HTMLDIR=`pwd`/reference/html
+%makeinstall_std HTMLDIR=`pwd`/reference/html
 
 desktop-file-install --vendor="" \
   --remove-category="Application" \
@@ -103,7 +105,7 @@ desktop-file-install --vendor="" \
 #kill intrusive docs
 rm -rf $RPM_BUILD_ROOT%{_docdir}/gchemutils
   
-%find_lang %{name}
+%find_lang gchemutils
 
 %clean
 rm -rf %{buildroot}
@@ -113,19 +115,28 @@ rm -rf %{buildroot}
 %post
 %update_menus
 %{update_desktop_database}
+GCONF_CONFIG_SOURCE=`gconftool-2 --get-default-source` gconftool-2 --makefile-install-rule %{_sysconfdir}/gconf/schemas/gcrystal.schemas > /dev/null
 
 %postun
 %clean_menus
 %{clean_desktop_database}
+GCONF_CONFIG_SOURCE=`gconftool-2 --get-default-source` gconftool-2 --makefile-uninstall-rule %{_sysconfdir}/gconf/schemas/gcrystal.schemas > /dev/null
 
 %postun -n %{libname}%{major} -p /sbin/ldconfig
 
-%files -f %{name}.lang
+%files -f gchemutils.lang
 %defattr(-, root, root)
 %doc AUTHORS ChangeLog COPYING NEWS README
+%{_sysconfdir}/gconf/schemas/*
 %{_bindir}/*
+%{_datadir}/%name
 %{_datadir}/gchemutils
 %{_datadir}/applications/*
+%{_datadir}/mime/packages/*
+%{_datadir}/mimelnk/application/*
+%{_datadir}/gnome/help/*
+%{_iconsdir}/hicolor/*/apps/gcrystal.png
+%{_iconsdir}/hicolor/*/mimetypes/gnome-mime-application-x-gcrystal.png
 %{_mandir}/man1/*.1.bz2
 %{_mandir}/man3/*.3.bz2
 
