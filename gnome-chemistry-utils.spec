@@ -1,4 +1,4 @@
-%define version 0.7.96
+%define version 0.8.0
 %define release %mkrel 1
 
 %define major 	0
@@ -37,6 +37,8 @@ Requires:	bodr
 Provides:	gcu = %{version}-%{release}
 Provides:	gchemutils = %{version}-%{release}
 Obsoletes:	gcu
+Obsoletes:	gnome-crystal
+Provides:	gnome-crystal
 
 %description
 The Gnome Chemistry Utils provide C++ classes and GTK2 widgets related to
