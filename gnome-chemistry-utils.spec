@@ -1,8 +1,9 @@
-%define version 0.8.0
+%define version 0.8.1
 %define release %mkrel 1
 
 %define major 	0
-%define libname %mklibname gcu
+%define libname %mklibname gcu %major
+%define develname %mklibname -d gcu
 
 %define __libtoolize /bin/true
 
@@ -45,13 +46,11 @@ The Gnome Chemistry Utils provide C++ classes and GTK2 widgets related to
 chemistry.  They are currently used in Gnome Crystal (gcrystal) and Gnome
 Chemistry Paint (gchempaint).
 
-%package -n %{libname}%{major}
+%package -n %{libname}
 Summary:	Main libraries for %{name}
 Group:		System/Libraries
-Requires:	%{name} = %{version}
-Provides:	%{libname} = %{version}-%{release}
 
-%description -n %{libname}%{major}
+%description -n %{libname}
 The Gnome Chemistry Utils provide C++ classes and GTK2 widgets related to
 chemistry.  They are currently used in Gnome Crystal (gcrystal) and Gnome
 Chemistry Paint (gchempaint).
@@ -59,15 +58,15 @@ Chemistry Paint (gchempaint).
 This package contains the library needed to run programs dynamically
 linked with %{name}.       
                                                                                                                      
-%package	-n %{libname}%{major}-devel
+%package	-n %{develname}
 Summary:	Development related files of %{name}
 Group:		Development/GNOME and GTK+
 Requires:	%{libname}%{major} = %{version}
 Provides:	gcu-devel = %{version}-%{release}
-Provides:	%{libname}-devel = %{version}-%{release}
 Provides:	%{name}-devel = %{version}-%{release}
+Obsoletes:	%{libname}-devel
 
-%description	-n %{libname}%{major}-devel
+%description	-n %{develname}
 The Gnome Chemistry Utils provide C++ classes and GTK2 widgets related to
 chemistry.  They are currently used in Gnome Crystal (gcrystal) and Gnome
 Chemistry Paint (gchempaint).
@@ -92,7 +91,7 @@ developing chemistry related programs using %{name}.
 %setup -q
 
 %build
-%configure2_5x --disable-rpath --enable-static=yes --disable-update-databases --disable-mozilla-plugin --disable-schemas-install
+%configure2_5x --disable-rpath --enable-static=no --disable-update-databases --disable-mozilla-plugin --disable-schemas-install
 %make
 
 %install
@@ -102,7 +101,7 @@ rm -rf %{buildroot}
 desktop-file-install --vendor="" \
   --remove-category="Application" \
   --add-category="Gnome" \
-  --add-category="X-MandrivaLinux-MoreApplications-Sciences-Chemistry;Science;Chemistry" \
+  --add-category="Science;Chemistry" \
   --dir $RPM_BUILD_ROOT%{_datadir}/applications $RPM_BUILD_ROOT%{_datadir}/applications/*
 
 #kill intrusive docs
@@ -113,7 +112,7 @@ rm -rf $RPM_BUILD_ROOT%{_docdir}/gchemutils
 %clean
 rm -rf %{buildroot}
 
-%post -n %{libname}%{major} -p /sbin/ldconfig
+%post -n %{libname} -p /sbin/ldconfig
 
 %post
 %update_menus
@@ -143,11 +142,11 @@ GCONF_CONFIG_SOURCE=`gconftool-2 --get-default-source` gconftool-2 --makefile-un
 %{_mandir}/man1/*.1.bz2
 %{_mandir}/man3/*.3.bz2
 
-%files -n %{libname}%{major}
+%files -n %{libname}
 %defattr(-, root, root)
 %{_libdir}/*.so.*
 
-%files -n %{libname}%{major}-devel
+%files -n %{develname}
 %defattr(-, root, root)
 %doc docs/reference
 %{_includedir}/*
