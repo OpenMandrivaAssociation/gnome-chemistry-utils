@@ -124,7 +124,7 @@ GCONF_CONFIG_SOURCE=`gconftool-2 --get-default-source` gconftool-2 --makefile-in
 %{clean_desktop_database}
 GCONF_CONFIG_SOURCE=`gconftool-2 --get-default-source` gconftool-2 --makefile-uninstall-rule %{_sysconfdir}/gconf/schemas/gcrystal.schemas > /dev/null
 
-%postun -n %{libname}%{major} -p /sbin/ldconfig
+%postun -n %{libname} -p /sbin/ldconfig
 
 %files -f gchemutils.lang
 %defattr(-, root, root)
