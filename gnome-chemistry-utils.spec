@@ -99,9 +99,6 @@ rm -rf %{buildroot}
 %makeinstall_std HTMLDIR=`pwd`/reference/html
 
 desktop-file-install --vendor="" \
-  --remove-category="Application" \
-  --add-category="Gnome" \
-  --add-category="Science;Chemistry" \
   --dir $RPM_BUILD_ROOT%{_datadir}/applications $RPM_BUILD_ROOT%{_datadir}/applications/*
 
 #kill intrusive docs
