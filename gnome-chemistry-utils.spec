@@ -128,7 +128,6 @@ GCONF_CONFIG_SOURCE=`gconftool-2 --get-default-source` gconftool-2 --makefile-un
 %doc AUTHORS ChangeLog COPYING NEWS README
 %{_sysconfdir}/gconf/schemas/*
 %{_bindir}/*
-%{_datadir}/%name
 %{_datadir}/gchemutils
 %{_datadir}/applications/*
 %{_datadir}/mime/packages/*
@@ -148,7 +147,6 @@ GCONF_CONFIG_SOURCE=`gconftool-2 --get-default-source` gconftool-2 --makefile-un
 %doc docs/reference
 %{_includedir}/*
 %{_libdir}/*.so
-%{_libdir}/*.a
 %{_libdir}/*.la
 %{_libdir}/pkgconfig/*.pc
 
