@@ -133,8 +133,8 @@ GCONF_CONFIG_SOURCE=`gconftool-2 --get-default-source` gconftool-2 --makefile-un
 %{_datadir}/mime/packages/*
 %{_datadir}/mimelnk/application/*
 %{_datadir}/gnome/help/*
-%{_iconsdir}/hicolor/*/apps/gcrystal.png
-%{_iconsdir}/hicolor/*/mimetypes/gnome-mime-application-x-gcrystal.png
+%{_iconsdir}/hicolor/*/apps/*.png
+%{_iconsdir}/hicolor/*/mimetypes/*.png
 %{_mandir}/man1/*.1.bz2
 %{_mandir}/man3/*.3.bz2
 
