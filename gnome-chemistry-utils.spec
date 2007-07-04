@@ -1,5 +1,5 @@
 %define version 0.8.1
-%define release %mkrel 1
+%define release %mkrel 2
 
 %define major 	0
 %define libname %mklibname gcu %major
@@ -61,7 +61,7 @@ linked with %{name}.
 %package	-n %{develname}
 Summary:	Development related files of %{name}
 Group:		Development/GNOME and GTK+
-Requires:	%{libname}%{major} = %{version}
+Requires:	%{libname} = %{version}-%{release}
 Provides:	gcu-devel = %{version}-%{release}
 Provides:	%{name}-devel = %{version}-%{release}
 Obsoletes:	%{libname}-devel
