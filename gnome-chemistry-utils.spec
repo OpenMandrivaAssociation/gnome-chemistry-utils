@@ -91,7 +91,10 @@ developing chemistry related programs using %{name}.
 %setup -q
 
 %build
-%configure2_5x --disable-rpath --enable-static=no --disable-update-databases --disable-mozilla-plugin --disable-schemas-install
+%configure2_5x \
+	--disable-rpath --enable-static=no --disable-update-databases \
+	--disable-mozilla-plugin --disable-schemas-install \
+	--disable-scrollkeeper
 %make
 
 %install
@@ -114,12 +117,16 @@ rm -rf %{buildroot}
 %post
 %update_menus
 %{update_desktop_database}
-GCONF_CONFIG_SOURCE=`gconftool-2 --get-default-source` gconftool-2 --makefile-install-rule %{_sysconfdir}/gconf/schemas/gcrystal.schemas > /dev/null
+%post_install_gconf_schemas gcrystal
+%update_scrollkeeper
+
+%preun
+%preun_uninstall_gconf_schemas gcrystal
 
 %postun
 %clean_menus
 %{clean_desktop_database}
-GCONF_CONFIG_SOURCE=`gconftool-2 --get-default-source` gconftool-2 --makefile-uninstall-rule %{_sysconfdir}/gconf/schemas/gcrystal.schemas > /dev/null
+%clean_scrollkeeper
 
 %postun -n %{libname} -p /sbin/ldconfig
 
@@ -153,6 +160,3 @@ GCONF_CONFIG_SOURCE=`gconftool-2 --get-default-source` gconftool-2 --makefile-un
 #%files -n %{name}-firefox-plugin
 #%defattr(-, root, root)
 #%{_libdir}/mozilla/plugins/*.so
-
-
-
