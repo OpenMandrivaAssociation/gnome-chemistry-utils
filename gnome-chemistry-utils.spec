@@ -35,6 +35,7 @@ BuildRequires:	bodr
 BuildRequires:	gnome-doc-utils
 Requires:       chemical-mime-data
 Requires:	bodr
+Requires(post,preun): scrollkeeper
 Provides:	gcu = %{version}-%{release}
 Provides:	gchemutils = %{version}-%{release}
 Obsoletes:	gcu
@@ -144,6 +145,7 @@ rm -rf %{buildroot}
 %{_iconsdir}/hicolor/*/mimetypes/*.png
 %{_mandir}/man1/*
 %{_mandir}/man3/*
+%{_datadir}/omf/*/*.omf
 
 %files -n %{libname}
 %defattr(-, root, root)
