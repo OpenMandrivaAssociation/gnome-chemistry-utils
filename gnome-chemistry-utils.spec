@@ -1,5 +1,5 @@
-%define version 0.8.2
-%define release %mkrel 2
+%define version 0.8.4
+%define release %mkrel 1
 
 %define major 	0
 %define libname %mklibname gcu %major
