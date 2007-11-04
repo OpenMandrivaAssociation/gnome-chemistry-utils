@@ -65,7 +65,7 @@ Group:		Development/GNOME and GTK+
 Requires:	%{libname} = %{version}-%{release}
 Provides:	gcu-devel = %{version}-%{release}
 Provides:	%{name}-devel = %{version}-%{release}
-Obsoletes:	%{libname}-devel
+Obsoletes:	%mklibname -d gcu 0
 
 %description	-n %{develname}
 The Gnome Chemistry Utils provide C++ classes and GTK2 widgets related to
@@ -120,6 +120,7 @@ rm -rf %{buildroot}
 %{update_desktop_database}
 %post_install_gconf_schemas gcrystal
 %update_scrollkeeper
+%update_icon_cache hicolor
 
 %preun
 %preun_uninstall_gconf_schemas gcrystal
@@ -128,6 +129,7 @@ rm -rf %{buildroot}
 %clean_menus
 %{clean_desktop_database}
 %clean_scrollkeeper
+%clean_icon_cache hicolor
 
 %postun -n %{libname} -p /sbin/ldconfig
 
