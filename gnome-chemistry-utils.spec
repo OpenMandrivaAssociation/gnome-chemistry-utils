@@ -13,6 +13,7 @@ Version:	%{version}
 Release:	%{release}
 License:	LGPL
 Group:		Sciences/Chemistry
+BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 URL:		http://www.nongnu.org/gchemutils/
 
 Source0:	http://savannah.nongnu.org/download/gchemutils/%{name}-%version.tar.bz2
