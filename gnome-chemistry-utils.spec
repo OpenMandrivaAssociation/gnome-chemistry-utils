@@ -1,5 +1,5 @@
-%define version 0.8.4
-%define release %mkrel 2
+%define version 0.8.5
+%define release %mkrel 1
 
 %define major 	0
 %define libname %mklibname gcu %major
@@ -11,12 +11,12 @@ Summary:	Backend for Gnome chemistry applications
 Name:		gnome-chemistry-utils
 Version:	%{version}
 Release:	%{release}
-License:	LGPL
+License:	LGPLv2+
 Group:		Sciences/Chemistry
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 URL:		http://www.nongnu.org/gchemutils/
 
-Source0:	http://savannah.nongnu.org/download/gchemutils/%{name}-%version.tar.bz2
+Source0:	http://download.savannah.nongnu.org/releases/gchemutils/0.8/%{name}-%version.tar.bz2
 
 BuildRequires:	libglade2.0-devel
 BuildRequires:	libgnomeprint-devel
