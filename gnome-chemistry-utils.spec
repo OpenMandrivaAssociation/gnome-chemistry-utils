@@ -1,4 +1,4 @@
-%define version 0.8.5
+%define version 0.8.6
 %define release %mkrel 1
 
 %define major 	0
@@ -138,6 +138,7 @@ rm -rf %{buildroot}
 %doc AUTHORS ChangeLog COPYING NEWS README
 %{_sysconfdir}/gconf/schemas/*
 %{_bindir}/*
+%{_libexecdir}/chem-viewer
 %{_datadir}/gchemutils
 %{_datadir}/applications/*
 %{_datadir}/mime/packages/*
