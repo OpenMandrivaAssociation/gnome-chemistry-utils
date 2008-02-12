@@ -58,7 +58,7 @@ Chemistry Paint (gchempaint).
 
 This package contains the library needed to run programs dynamically
 linked with %{name}.       
-                                                                                                                     
+
 %package	-n %{develname}
 Summary:	Development related files of %{name}
 Group:		Development/GNOME and GTK+
