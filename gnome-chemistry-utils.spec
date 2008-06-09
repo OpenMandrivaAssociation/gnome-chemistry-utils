@@ -113,7 +113,9 @@ rm -rf $RPM_BUILD_ROOT%{_docdir}/gchemutils
 %clean
 rm -rf %{buildroot}
 
+%if %mdkversion < 200900
 %post -n %{libname} -p /sbin/ldconfig
+%endif
 
 %post
 %update_menus
@@ -131,7 +133,9 @@ rm -rf %{buildroot}
 %clean_scrollkeeper
 %clean_icon_cache hicolor
 
+%if %mdkversion < 200900
 %postun -n %{libname} -p /sbin/ldconfig
+%endif
 
 %files -f gchemutils.lang
 %defattr(-, root, root)
