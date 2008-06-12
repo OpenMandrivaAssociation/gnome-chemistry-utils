@@ -117,21 +117,25 @@ rm -rf %{buildroot}
 %post -n %{libname} -p /sbin/ldconfig
 %endif
 
+%if %mdkversion < 200900
 %post
 %update_menus
 %{update_desktop_database}
 %post_install_gconf_schemas gcrystal
 %update_scrollkeeper
 %update_icon_cache hicolor
+%endif
 
 %preun
 %preun_uninstall_gconf_schemas gcrystal
 
+%if %mdkversion < 200900
 %postun
 %clean_menus
 %{clean_desktop_database}
 %clean_scrollkeeper
 %clean_icon_cache hicolor
+%endif
 
 %if %mdkversion < 200900
 %postun -n %{libname} -p /sbin/ldconfig
