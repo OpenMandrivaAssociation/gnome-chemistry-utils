@@ -75,9 +75,10 @@ This package contains the common files ahred by different components of
 %defattr(-, root, root)
 %_sysconfdir/gconf/schemas/gchemutils.schemas
 %dir %_libdir/gchemutils
-%dir %_libdir/gchemutils/plugins
-%_libdir/gchemutils/plugins/cdx
-%_libdir/gchemutils/plugins/cdxml
+%dir %_libdir/gchemutils/%{api}
+%dir %_libdir/gchemutils/%{api}/plugins
+%_libdir/gchemutils/%{api}/plugins/cdx
+%_libdir/gchemutils/%{api}/plugins/cdxml
 %dir %_datadir/gchemutils
 %dir %_datadir/gchemutils/%{api}
 %_datadir/gchemutils/%{api}/*.xml
