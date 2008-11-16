@@ -1,12 +1,10 @@
 %define version 0.10.1
-%define release %mkrel 1
+%define release %mkrel 2
 
 %define api	0.10
 %define major 	0
 %define libname %mklibname gcu %api %major
 %define libgchempaint %mklibname gchempaint %api %major
-
-#define __libtoolize /bin/true
 
 Summary:	Backend for Gnome chemistry applications
 Name:		gnome-chemistry-utils
@@ -75,7 +73,10 @@ This package contains the common files ahred by different components of
 %files common -f gchemutils-0.10.lang
 %defattr(-, root, root)
 %_sysconfdir/gconf/schemas/gchemutils.schemas
-%_libdir/gchemutils
+%dir %_libdir/gchemutils
+%dir %_libdir/gchemutils/plugins
+%_libdir/gchemutils/plugins/cdx
+%_libdir/gchemutils/plugins/cdxml
 %dir %_datadir/gchemutils
 %dir %_datadir/gchemutils/%{api}
 %_datadir/gchemutils/%{api}/*.xml
@@ -128,6 +129,7 @@ Summary:        GNOME 2D chemical structure drawing tool
 Group:          Sciences/Chemistry
 Requires:	%name-common = %version
 Suggests:	%name-goffice = %version
+Conflicts:	%name-common < 0.10.1-2
 
 %description -n gchempaint
 GChemPaint is a 2D chemical structures editor for the Gnome-2 desktop.
@@ -143,6 +145,7 @@ Gnumeric and Abiword.
 %_sysconfdir/gconf/schemas/gchempaint-arrows.schemas
 %_sysconfdir/gconf/schemas/gchempaint.schemas
 %_bindir/gchempaint*
+%_libdir/gchemutils/%{api}/plugins/paint
 %_datadir/applications/gchempaint*.desktop
 %_datadir/gchemutils/%{api}/glade/paint
 %_datadir/gchemutils/%{api}/paint
@@ -269,7 +272,7 @@ GSpectrum is a Spectrum viewer.
 %package goffice
 Summary:        GOffice plugin for gchemutils
 Group:          Sciences/Chemistry
-Requires:       %name-common = %version
+Requires:       gchempaint = %version
 Requires:	goffice = %goffice_ver
 
 %description goffice
