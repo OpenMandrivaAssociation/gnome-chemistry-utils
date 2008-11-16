@@ -29,6 +29,7 @@ BuildRequires:  intltool
 BuildRequires:  chemical-mime-data
 BuildRequires:	bodr
 BuildRequires:	gnome-doc-utils
+BuildRequires:	chrpath
 Provides:	gcu = %{version}-%{release}
 Provides:	gchemutils = %{version}-%{release}
 Obsoletes:	gcu < %{version}-%{release}
@@ -317,7 +318,7 @@ developing chemistry related programs using %{name}.
 
 %build
 %configure2_5x \
-	--disable-rpath --enable-static=no --disable-update-databases \
+	--enable-static=no --disable-update-databases \
 	--disable-mozilla-plugin --disable-schemas-install \
 	--disable-scrollkeeper --without-kde-mime-dir
 %make
@@ -331,6 +332,11 @@ rm -rf $RPM_BUILD_ROOT%{_docdir}/gchemutils
 
 #kill libtool archives
 find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
+
+#kill rpaths
+chrpath --delete  %{buildroot}%{_bindir}/*
+chrpath --delete  %{buildroot}%{_libdir}/goffice/*/plugins/gchemutils/gchemutils.so
+chrpath --delete  %{buildroot}%{_libdir}/*.so.*
 
 %find_lang gchemutils-0.10
 
