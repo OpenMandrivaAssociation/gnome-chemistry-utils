@@ -1,5 +1,5 @@
-%define version 0.8.7
-%define release %mkrel 3
+%define version 0.10.1
+%define release %mkrel 1
 
 %define major 	0
 %define libname %mklibname gcu %major
@@ -15,24 +15,22 @@ License:	LGPLv2+
 Group:		Sciences/Chemistry
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 URL:		http://www.nongnu.org/gchemutils/
-
-Source0:	http://download.savannah.nongnu.org/releases/gchemutils/0.8/%{name}-%version.tar.bz2
-
+Source0:	http://download.savannah.nongnu.org/releases/gchemutils/0.10/%{name}-%version.tar.bz2
+Patch0:		gnome-chemistry-utils-0.10.1-fix-underlink.patch
 BuildRequires:	libglade2.0-devel
 BuildRequires:	libgnomeprint-devel
 BuildRequires:	libgtkglext-devel
-BuildRequires:	goffice0-devel
+BuildRequires:	goffice-devel
 BuildRequires:	openbabel-devel >= 1.100.1
 BuildRequires:	libgnomeui2-devel
 BuildRequires:	libgnomeprintui2-2-devel
 BuildRequires:	gtk-doc
 BuildRequires:  perl-XML-Parser
-#BuildRequires:  mozilla-firefox-devel
-BuildRequires:  gettext-devel
-BuildRequires:  desktop-file-utils
+BuildRequires:  intltool
 BuildRequires:  chemical-mime-data
 BuildRequires:	bodr
 BuildRequires:	gnome-doc-utils
+BuildRequires:	chrpath
 Requires:       chemical-mime-data
 Requires:	bodr
 Requires(post,preun): scrollkeeper
@@ -75,40 +73,39 @@ Chemistry Paint (gchempaint).
 This package includes the header files and static libraries necessary for
 developing chemistry related programs using %{name}.
 
-#%package -n     %{name}-firefox-plugin
-#Summary:        %{name} firefox plugin
-#Group:          Networking/WWW
-#Requires:       %{name} = %{version}-%{release}
-
-#%description -n  %{name}-firefox-plugin
-#This package is a set of chemical utils. Three programs are avaible:
-#* A 3D molecular structure viewer (GChem3Viewer).
-#* A Chemical calculator (GChemCalc).
-#* A periodic table of the elements application (GChemTable).
-#This package contains the mozilla plugin.
-
-
 %prep
 %setup -q
+%patch0 -p0
 
 %build
 %configure2_5x \
 	--disable-rpath --enable-static=no --disable-update-databases \
 	--disable-mozilla-plugin --disable-schemas-install \
-	--disable-scrollkeeper
+	--disable-scrollkeeper --without-kde-mime-dir
 %make
 
 %install
 rm -rf %{buildroot}
 %makeinstall_std HTMLDIR=`pwd`/reference/html
 
-desktop-file-install --vendor="" \
-  --dir $RPM_BUILD_ROOT%{_datadir}/applications $RPM_BUILD_ROOT%{_datadir}/applications/*
-
 #kill intrusive docs
 rm -rf $RPM_BUILD_ROOT%{_docdir}/gchemutils
+
+#kill libtool archives
+find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
+
+#kill rpaths
+chrpath --delete  $RPM_BUILD_ROOT%{_bindir}/gchem3d-0.10
+chrpath --delete  $RPM_BUILD_ROOT%{_bindir}/gchempaint-0.10
+chrpath --delete  $RPM_BUILD_ROOT%{_bindir}/gchemcalc-0.10
+chrpath --delete  $RPM_BUILD_ROOT%{_bindir}/gcrystal-0.10
+chrpath --delete  $RPM_BUILD_ROOT%{_bindir}/gspectrum-0.10
+chrpath --delete  $RPM_BUILD_ROOT%{_bindir}/gchemtable-0.10
+chrpath --delete  $RPM_BUILD_ROOT%{_libdir}/goffice/0.6.5/plugins/gchemutils/gchemutils.so
+chrpath --delete  $RPM_BUILD_ROOT%{_libdir}/libgchempaint-0.10.so.%{version}
+chrpath --delete  $RPM_BUILD_ROOT%{_libexecdir}/chem-viewer
   
-%find_lang gchemutils
+%find_lang gchemutils-0.10
 
 %clean
 rm -rf %{buildroot}
@@ -121,13 +118,13 @@ rm -rf %{buildroot}
 %post
 %update_menus
 %{update_desktop_database}
-%post_install_gconf_schemas gcrystal
+%post_install_gconf_schemas gchempaint gchempaint-arrows gchemutils gcrystal
 %update_scrollkeeper
 %update_icon_cache hicolor
 %endif
 
 %preun
-%preun_uninstall_gconf_schemas gcrystal
+%preun_uninstall_gconf_schemas gchempaint gchempaint-arrows gchemutils gcrystal
 
 %if %mdkversion < 200900
 %postun
@@ -141,20 +138,21 @@ rm -rf %{buildroot}
 %postun -n %{libname} -p /sbin/ldconfig
 %endif
 
-%files -f gchemutils.lang
+%files -f gchemutils-0.10.lang
 %defattr(-, root, root)
 %doc AUTHORS ChangeLog COPYING NEWS README
 %{_sysconfdir}/gconf/schemas/*
 %{_bindir}/*
+%dir %_libdir/gchemutils
+%_libdir/gchemutils/*/plugins/*/*.so
+%_libdir/goffice/*/plugins/gchemutils
 %{_datadir}/gchemutils
 %{_datadir}/applications/*
 %{_datadir}/mime/packages/*
-%{_datadir}/mimelnk/application/*
 %{_datadir}/gnome/help/*
 %{_iconsdir}/hicolor/*/apps/*.png
 %{_iconsdir}/hicolor/*/mimetypes/*.png
 %{_mandir}/man1/*
-%{_mandir}/man3/*
 %{_datadir}/omf/*/*.omf
 
 %files -n %{libname}
@@ -164,11 +162,4 @@ rm -rf %{buildroot}
 %files -n %{develname}
 %defattr(-, root, root)
 %doc docs/reference
-%{_includedir}/*
 %{_libdir}/*.so
-%{_libdir}/*.la
-%{_libdir}/pkgconfig/*.pc
-
-#%files -n %{name}-firefox-plugin
-#%defattr(-, root, root)
-#%{_libdir}/mozilla/plugins/*.so
