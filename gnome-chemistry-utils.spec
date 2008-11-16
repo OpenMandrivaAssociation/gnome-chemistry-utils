@@ -94,17 +94,6 @@ rm -rf $RPM_BUILD_ROOT%{_docdir}/gchemutils
 #kill libtool archives
 find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 
-#kill rpaths
-chrpath --delete  $RPM_BUILD_ROOT%{_bindir}/gchem3d-0.10
-chrpath --delete  $RPM_BUILD_ROOT%{_bindir}/gchempaint-0.10
-chrpath --delete  $RPM_BUILD_ROOT%{_bindir}/gchemcalc-0.10
-chrpath --delete  $RPM_BUILD_ROOT%{_bindir}/gcrystal-0.10
-chrpath --delete  $RPM_BUILD_ROOT%{_bindir}/gspectrum-0.10
-chrpath --delete  $RPM_BUILD_ROOT%{_bindir}/gchemtable-0.10
-chrpath --delete  $RPM_BUILD_ROOT%{_libdir}/goffice/0.6.5/plugins/gchemutils/gchemutils.so
-chrpath --delete  $RPM_BUILD_ROOT%{_libdir}/libgchempaint-0.10.so.%{version}
-chrpath --delete  $RPM_BUILD_ROOT%{_libexecdir}/chem-viewer
-  
 %find_lang gchemutils-0.10
 
 %clean
@@ -144,7 +133,7 @@ rm -rf %{buildroot}
 %{_sysconfdir}/gconf/schemas/*
 %{_bindir}/*
 %dir %_libdir/gchemutils
-%_libdir/gchemutils/*/plugins/*/*.so
+%_libdir/gchemutils/*/plugins/*/*
 %_libdir/goffice/*/plugins/gchemutils
 %{_datadir}/gchemutils
 %{_datadir}/applications/*
