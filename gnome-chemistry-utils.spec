@@ -1,11 +1,12 @@
 %define version 0.10.1
 %define release %mkrel 1
 
+%define api	0.10
 %define major 	0
-%define libname %mklibname gcu %major
-%define develname %mklibname -d gcu
+%define libname %mklibname gcu %api %major
+%define libgchempaint %mklibname gchempaint %api %major
 
-%define __libtoolize /bin/true
+#define __libtoolize /bin/true
 
 Summary:	Backend for Gnome chemistry applications
 Name:		gnome-chemistry-utils
@@ -15,7 +16,7 @@ License:	LGPLv2+
 Group:		Sciences/Chemistry
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 URL:		http://www.nongnu.org/gchemutils/
-Source0:	http://download.savannah.nongnu.org/releases/gchemutils/0.10/%{name}-%version.tar.bz2
+Source0:	http://download.savannah.nongnu.org/releases/gchemutils/%api/%{name}-%version.tar.bz2
 Patch0:		gnome-chemistry-utils-0.10.1-fix-underlink.patch
 BuildRequires:	libglade2.0-devel
 BuildRequires:	libgnomeprint-devel
@@ -30,20 +31,60 @@ BuildRequires:  intltool
 BuildRequires:  chemical-mime-data
 BuildRequires:	bodr
 BuildRequires:	gnome-doc-utils
-BuildRequires:	chrpath
-Requires:       chemical-mime-data
-Requires:	bodr
-Requires(post,preun): scrollkeeper
 Provides:	gcu = %{version}-%{release}
 Provides:	gchemutils = %{version}-%{release}
-Obsoletes:	gcu
-Obsoletes:	gnome-crystal
-Provides:	gnome-crystal
+Obsoletes:	gcu < %{version}-%{release}
+Obsoletes:	gchemutils < %{version}-%{release}
+# fwang: the main package comes meta package since 0.10
+Requires:	gchem3d = %version
+Requires:	gchemcalc = %version
+Requires:	gchempaint = %version
+Requires:	gchemtable = %version
+Requires:	gcrystal = %version
+Requires:	gspectrum = %version
 
 %description
 The Gnome Chemistry Utils provide C++ classes and GTK2 widgets related to
 chemistry.  They are currently used in Gnome Crystal (gcrystal) and Gnome
 Chemistry Paint (gchempaint).
+
+%files
+%defattr(-, root, root)
+%doc README ChangeLog NEWS AUTHORS
+
+#--------------------------------------------------------------------
+
+%package common
+Summary:	Common files shared by different components of %{name}
+Group:		Sciences/Chemistry
+Conflicts:	%name < %version
+Requires:       chemical-mime-data
+Requires:       bodr
+
+%description common
+The Gnome Chemistry Utils provide C++ classes and GTK2 widgets related to
+chemistry.  They are currently used in Gnome Crystal (gcrystal) and Gnome
+Chemistry Paint (gchempaint).
+
+This package contains the common files ahred by different components of
+%{name}.
+
+%preun common
+%preun_uninstall_gconf_schemas gchemutils
+
+%files common -f gchemutils-0.10.lang
+%defattr(-, root, root)
+%_sysconfdir/gconf/schemas/gchemutils.schemas
+%_libdir/gchemutils
+%dir %_datadir/gchemutils
+%dir %_datadir/gchemutils/%{api}
+%_datadir/gchemutils/%{api}/*.xml
+%dir %_datadir/gchemutils/%{api}/glade
+%_datadir/gchemutils/%{api}/glade/*.glade
+%dir %_datadir/gchemutils/%{api}/pixmaps
+%_datadir/mime/packages/*.xml
+
+#--------------------------------------------------------------------
 
 %package -n %{libname}
 Summary:	Main libraries for %{name}
@@ -55,23 +96,217 @@ chemistry.  They are currently used in Gnome Crystal (gcrystal) and Gnome
 Chemistry Paint (gchempaint).
 
 This package contains the library needed to run programs dynamically
-linked with %{name}.       
+linked with %{name}.
 
-%package	-n %{develname}
+%files -n %{libname}
+%defattr(-, root, root)
+%_libdir/libgcu-%{api}.so.%{major}*
+
+#--------------------------------------------------------------------
+
+%package -n %{libgchempaint}
+Summary:        Libraries for gchempaint
+Group:          System/Libraries
+
+%description -n %{libgchempaint}
+The Gnome Chemistry Utils provide C++ classes and GTK2 widgets related to
+chemistry. They are currently used in Gnome Crystal (gcrystal) and Gnome
+Chemistry Paint (gchempaint).
+
+This package contains the library needed to run programs dynamically
+linked with gchempaint.
+
+%files -n %{libgchempaint}
+%defattr(-, root, root)
+%_libdir/libgchempaint-%{api}.so.%{major}*
+%_libdir/libgcpcanvas-%{api}.so.%{major}*
+
+#--------------------------------------------------------------------
+
+%package -n gchempaint
+Summary:        GNOME 2D chemical structure drawing tool
+Group:          Sciences/Chemistry
+Requires:	%name-common = %version
+Suggests:	%name-goffice = %version
+
+%description -n gchempaint
+GChemPaint is a 2D chemical structures editor for the Gnome-2 desktop.
+GChemPaint is a multi-document application and will be a bonobo server so
+that some chemistry could be embedded in Gnome applications such as
+Gnumeric and Abiword.
+
+%preun -n gchempaint
+%preun_uninstall_gconf_schemas gchempaint gchempaint-arrows
+
+%files -n gchempaint
+%defattr(-, root, root)
+%_sysconfdir/gconf/schemas/gchempaint-arrows.schemas
+%_sysconfdir/gconf/schemas/gchempaint.schemas
+%_bindir/gchempaint*
+%_datadir/applications/gchempaint*.desktop
+%_datadir/gchemutils/%{api}/glade/paint
+%_datadir/gchemutils/%{api}/paint
+%_datadir/gchemutils/%{api}/pixmaps/gchempaint_logo.png
+%_datadir/gnome/help/gchempaint-%{api}
+%_datadir/icons/hicolor/*/apps/gchempaint.png
+%_datadir/icons/hicolor/*/mimetypes/gnome-mime-application-x-gchempaint.png
+%_mandir/man1/gchempaint.*
+%_datadir/omf/gchempaint-%{api}/gchempaint-%{api}-C.omf
+
+#--------------------------------------------------------------------
+
+%package -n gchem3d
+Summary:        Molecules Viewer
+Group:          Sciences/Chemistry
+Requires:       %name-common = %version
+Conflicts:	%name < %version
+
+%description -n gchem3d
+GChem3Viewer is a 3D molecular structure viewer.
+
+%files -n gchem3d
+%defattr(-, root, root)
+%_bindir/gchem3d*
+%_datadir/applications/gchem3d*.desktop
+%_datadir/gnome/help/gchem3d-%{api}
+%_datadir/icons/hicolor/*/apps/gchem3d.png
+%_mandir/man1/gchem3d.*
+%_datadir/omf/gchem3d-%{api}/gchem3d-%{api}-C.omf
+
+#--------------------------------------------------------------------
+
+%package -n gchemcalc
+Summary:        Chemical calculator
+Group:          Sciences/Chemistry
+Requires:       %name-common = %version
+Conflicts:	%name < %version
+
+%description -n gchemcalc
+GChemCalc is a Chemical calculator.
+
+%files -n gchemcalc
+%defattr(-, root, root)
+%_bindir/gchemcalc*
+%_datadir/gchemutils/%{api}/glade/gchemcalc.glade
+%_datadir/applications/gchemcalc*.desktop
+%_datadir/gnome/help/gchemcalc-%{api}
+%_datadir/icons/hicolor/*/apps/gchemcalc.png
+%_mandir/man1/gchemcalc.*
+%_datadir/omf/gchemcalc-%{api}/gchemcalc-%{api}-C.omf
+
+#--------------------------------------------------------------------
+
+%package -n gchemtable
+Summary:        Periodic table
+Group:          Sciences/Chemistry
+Requires:       %name-common = %version
+Conflicts:	%name < %version
+
+%description -n gchemtable
+GChemTable is a periodic table of the elements application.
+
+%files -n gchemtable
+%defattr(-, root, root)
+%_bindir/gchemtable*
+%_datadir/gchemutils/%{api}/glade/table
+%_datadir/applications/gchemtable*.desktop
+%_datadir/gnome/help/gchemtable-%{api}
+%_datadir/icons/hicolor/*/apps/gchemtable.png
+%_mandir/man1/gchemtable.*
+%_datadir/omf/gchemtable-%{api}/gchemtable-%{api}-C.omf
+
+#--------------------------------------------------------------------
+
+%package -n gcrystal
+Summary:        Crystal structure viewer
+Group:          Sciences/Chemistry
+Requires:       %name-common = %version
+Conflicts:	%name < %version
+
+%description -n gcrystal
+GCrystal is a Crystal structure viewer.
+
+%preun -n gcrystal
+%preun_uninstall_gconf_schemas gcrystal
+
+%files -n gcrystal
+%defattr(-, root, root)
+%_sysconfdir/gconf/schemas/gcrystal.schemas
+%_bindir/gcrystal*
+%_datadir/gchemutils/%{api}/glade/crystal
+%_datadir/gchemutils/%{api}/pixmaps/gcrystal_logo.png
+%_datadir/applications/gcrystal*.desktop
+%_datadir/gnome/help/gcrystal-%{api}
+%_datadir/icons/hicolor/*/apps/gcrystal.png
+%_datadir/icons/hicolor/*/mimetypes/gnome-mime-application-x-gcrystal.png
+%_mandir/man1/gcrystal.*
+%_datadir/omf/gcrystal-%{api}/gcrystal-%{api}-C.omf
+
+#--------------------------------------------------------------------
+
+%package -n gspectrum
+Summary:        Spectrum viewer
+Group:          Sciences/Chemistry
+Requires:       %name-common = %version
+Conflicts:	%name < %version
+
+%description -n gspectrum
+GSpectrum is a Spectrum viewer.
+
+%files -n gspectrum
+%defattr(-, root, root)
+%_bindir/gspectrum*
+%_datadir/applications/gspectrum*.desktop
+%_datadir/gnome/help/gspectrum-%{api}
+%_datadir/icons/hicolor/*/apps/gspectrum.png
+%_mandir/man1/gspectrum.*
+%_datadir/omf/gspectrum-%{api}/gspectrum-%{api}-C.omf
+
+#--------------------------------------------------------------------
+
+%define goffice_ver %( rpm -q --whatprovides goffice-devel --queryformat %%{VERSION})
+
+%package goffice
+Summary:        GOffice plugin for gchemutils
+Group:          Sciences/Chemistry
+Requires:       %name-common = %version
+Requires:	goffice = %goffice_ver
+
+%description goffice
+GOffice plugin for gchemutils.
+
+%files goffice
+%defattr(-, root, root)
+%_libdir/goffice/%{goffice_ver}/plugins/gchemutils
+
+#--------------------------------------------------------------------
+
+%package	devel
 Summary:	Development related files of %{name}
 Group:		Development/GNOME and GTK+
 Requires:	%{libname} = %{version}-%{release}
+Requires:	%{libgchempaint} = = %{version}-%{release}
 Provides:	gcu-devel = %{version}-%{release}
-Provides:	%{name}-devel = %{version}-%{release}
+Provides:	gchemutils-devel = %{version}-%{release}
+Provides:	gchempaint-devel = %{version}-%{release}
 Obsoletes:	%mklibname -d gcu 0
+Obsoletes:	%{_lib}gcu-devel < %version
+Obsoletes:	gchempaint-devel < %version
 
-%description	-n %{develname}
+%description	devel
 The Gnome Chemistry Utils provide C++ classes and GTK2 widgets related to
 chemistry.  They are currently used in Gnome Crystal (gcrystal) and Gnome
 Chemistry Paint (gchempaint).
 
 This package includes the header files and static libraries necessary for
 developing chemistry related programs using %{name}.
+
+%files devel
+%defattr(-, root, root)
+%doc docs/reference
+%_libdir/*.so
+
+#--------------------------------------------------------------------
 
 %prep
 %setup -q
@@ -98,57 +333,3 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 
 %clean
 rm -rf %{buildroot}
-
-%if %mdkversion < 200900
-%post -n %{libname} -p /sbin/ldconfig
-%endif
-
-%if %mdkversion < 200900
-%post
-%update_menus
-%{update_desktop_database}
-%post_install_gconf_schemas gchempaint gchempaint-arrows gchemutils gcrystal
-%update_scrollkeeper
-%update_icon_cache hicolor
-%endif
-
-%preun
-%preun_uninstall_gconf_schemas gchempaint gchempaint-arrows gchemutils gcrystal
-
-%if %mdkversion < 200900
-%postun
-%clean_menus
-%{clean_desktop_database}
-%clean_scrollkeeper
-%clean_icon_cache hicolor
-%endif
-
-%if %mdkversion < 200900
-%postun -n %{libname} -p /sbin/ldconfig
-%endif
-
-%files -f gchemutils-0.10.lang
-%defattr(-, root, root)
-%doc AUTHORS ChangeLog COPYING NEWS README
-%{_sysconfdir}/gconf/schemas/*
-%{_bindir}/*
-%dir %_libdir/gchemutils
-%_libdir/gchemutils/*/plugins/*/*
-%_libdir/goffice/*/plugins/gchemutils
-%{_datadir}/gchemutils
-%{_datadir}/applications/*
-%{_datadir}/mime/packages/*
-%{_datadir}/gnome/help/*
-%{_iconsdir}/hicolor/*/apps/*.png
-%{_iconsdir}/hicolor/*/mimetypes/*.png
-%{_mandir}/man1/*
-%{_datadir}/omf/*/*.omf
-
-%files -n %{libname}
-%defattr(-, root, root)
-%{_libdir}/*.so.%{major}*
-
-%files -n %{develname}
-%defattr(-, root, root)
-%doc docs/reference
-%{_libdir}/*.so
