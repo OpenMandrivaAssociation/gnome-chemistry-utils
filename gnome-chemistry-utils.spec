@@ -1,5 +1,5 @@
 %define version 0.10.1
-%define release %mkrel 2
+%define release %mkrel 3
 
 %define api	0.10
 %define major 	0
@@ -290,7 +290,7 @@ GOffice plugin for gchemutils.
 Summary:	Development related files of %{name}
 Group:		Development/GNOME and GTK+
 Requires:	%{libname} = %{version}-%{release}
-Requires:	%{libgchempaint} = = %{version}-%{release}
+Requires:	%{libgchempaint} = %{version}-%{release}
 Provides:	gcu-devel = %{version}-%{release}
 Provides:	gchemutils-devel = %{version}-%{release}
 Provides:	gchempaint-devel = %{version}-%{release}
