@@ -1,4 +1,4 @@
-%define version 0.10.3
+%define version 0.10.4
 %define release %mkrel 1
 
 %define api	0.10
@@ -15,7 +15,7 @@ Group:		Sciences/Chemistry
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 URL:		http://www.nongnu.org/gchemutils/
 Source0:	http://download.savannah.nongnu.org/releases/gchemutils/%api/%{name}-%version.tar.bz2
-Patch0:		gnome-chemistry-utils-0.10.1-fix-underlink.patch
+Patch0:		gnome-chemistry-utils-0.10.4-fix-underlink.patch
 Patch1:		gnome-chemistry-utils-0.10.3-fix-str-fmt.patch
 BuildRequires:	libglade2.0-devel
 BuildRequires:	libgnomeprint-devel
@@ -320,6 +320,7 @@ developing chemistry related programs using %{name}.
 %patch1 -p0
 
 %build
+autoreconf -fi
 %configure2_5x \
 	--enable-static=no --disable-update-databases \
 	--disable-mozilla-plugin --disable-schemas-install \
