@@ -1,5 +1,5 @@
 %define version 0.10.9
-%define release %mkrel 2
+%define release %mkrel 3
 
 %define api	0.10
 %define major 	0
