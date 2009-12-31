@@ -16,6 +16,7 @@ BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 URL:		http://www.nongnu.org/gchemutils/
 Source0:	http://download.savannah.nongnu.org/releases/gchemutils/%api/%{name}-%version.tar.bz2
 Patch1:		gnome-chemistry-utils-0.10.8-fix-str-fmt.patch
+Patch2:		gnome-chemistry-utils-0.10.10-linkage.patch
 BuildRequires:	libglade2.0-devel
 BuildRequires:	libgnomeprint-devel
 BuildRequires:	libgtkglext-devel
@@ -316,8 +317,10 @@ developing chemistry related programs using %{name}.
 %prep
 %setup -q
 %patch1 -p1
+%patch2 -p1
 
 %build
+autoreconf -fi
 %configure2_5x \
 	--enable-static=no --disable-update-databases \
 	--disable-mozilla-plugin --disable-schemas-install \
