@@ -1,7 +1,7 @@
-%define version 0.10.12
-%define release %mkrel 2
+%define version 0.12.2
+%define release %mkrel 1
 
-%define api	0.10
+%define api	0.12
 %define major 	0
 %define libname %mklibname gcu %api %major
 %define libgchempaint %mklibname gchempaint %api %major
@@ -16,8 +16,6 @@ BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 URL:		http://www.nongnu.org/gchemutils/
 Source0:	http://download.savannah.nongnu.org/releases/gchemutils/%api/%{name}-%version.tar.bz2
 Patch1:		gnome-chemistry-utils-0.10.8-fix-str-fmt.patch
-Patch2:		gnome-chemistry-utils-0.10.10-linkage.patch
-BuildRequires:	libglade2.0-devel
 BuildRequires:	libgnomeprint-devel
 BuildRequires:	libgtkglext-devel
 BuildRequires:	goffice-devel
@@ -72,7 +70,7 @@ This package contains the common files ahred by different components of
 %preun common
 %preun_uninstall_gconf_schemas gchemutils
 
-%files common -f gchemutils-0.10.lang
+%files common -f gchemutils-%{api}.lang
 %defattr(-, root, root)
 %_sysconfdir/gconf/schemas/gchemutils.schemas
 %dir %_libdir/gchemutils
@@ -80,12 +78,14 @@ This package contains the common files ahred by different components of
 %dir %_libdir/gchemutils/%{api}/plugins
 %_libdir/gchemutils/%{api}/plugins/cdx
 %_libdir/gchemutils/%{api}/plugins/cdxml
+%_libdir/gchemutils/%{api}/plugins/cif
+%_libdir/gchemutils/%{api}/plugins/cml
 %dir %_datadir/gchemutils
 %dir %_datadir/gchemutils/%{api}
 %_datadir/gchemutils/%{api}/*.xml
-%dir %_datadir/gchemutils/%{api}/glade
-%_datadir/gchemutils/%{api}/glade/*.glade
 %dir %_datadir/gchemutils/%{api}/pixmaps
+%dir %_datadir/gchemutils/%{api}/ui
+%_datadir/gchemutils/%{api}/ui/libgcu
 %_datadir/mime/packages/*.xml
 
 #--------------------------------------------------------------------
@@ -122,8 +122,8 @@ linked with gchempaint.
 
 %files -n %{libgchempaint}
 %defattr(-, root, root)
-%_libdir/libgchempaint-%{api}.so.%{major}*
-%_libdir/libgcpcanvas-%{api}.so.%{major}*
+%_libdir/libgcp-%{api}.so.%{major}*
+%_libdir/libgccv-%{api}.so.%{major}*
 
 #--------------------------------------------------------------------
 
@@ -150,12 +150,12 @@ Gnumeric and Abiword.
 %_bindir/gchempaint*
 %_libdir/gchemutils/%{api}/plugins/paint
 %_datadir/applications/gchempaint*.desktop
-%_datadir/gchemutils/%{api}/glade/paint
 %_datadir/gchemutils/%{api}/paint
 %_datadir/gchemutils/%{api}/pixmaps/gchempaint_logo.png
+%_datadir/gchemutils/%{api}/ui/paint
 %_datadir/gnome/help/gchempaint-%{api}
-%_datadir/icons/hicolor/*/apps/gchempaint.png
-%_datadir/icons/hicolor/*/mimetypes/gnome-mime-application-x-gchempaint.png
+%_iconsdir/hicolor/*/apps/gchempaint.png
+%_iconsdir/hicolor/*/mimetypes/application-x-gchempaint.png
 %_mandir/man1/gchempaint.*
 %_datadir/omf/gchempaint-%{api}/gchempaint-%{api}-C.omf
 
@@ -175,7 +175,7 @@ GChem3Viewer is a 3D molecular structure viewer.
 %_bindir/gchem3d*
 %_datadir/applications/gchem3d*.desktop
 %_datadir/gnome/help/gchem3d-%{api}
-%_datadir/icons/hicolor/*/apps/gchem3d.png
+%_iconsdir/hicolor/*/apps/gchem3d.png
 %_mandir/man1/gchem3d.*
 %_datadir/omf/gchem3d-%{api}/gchem3d-%{api}-C.omf
 
@@ -193,10 +193,10 @@ GChemCalc is a Chemical calculator.
 %files -n gchemcalc
 %defattr(-, root, root)
 %_bindir/gchemcalc*
-%_datadir/gchemutils/%{api}/glade/gchemcalc.glade
 %_datadir/applications/gchemcalc*.desktop
+%_datadir/gchemutils/%{api}/ui/calc
 %_datadir/gnome/help/gchemcalc-%{api}
-%_datadir/icons/hicolor/*/apps/gchemcalc.png
+%_iconsdir/hicolor/*/apps/gchemcalc.png
 %_mandir/man1/gchemcalc.*
 %_datadir/omf/gchemcalc-%{api}/gchemcalc-%{api}-C.omf
 
@@ -214,10 +214,10 @@ GChemTable is a periodic table of the elements application.
 %files -n gchemtable
 %defattr(-, root, root)
 %_bindir/gchemtable*
-%_datadir/gchemutils/%{api}/glade/table
 %_datadir/applications/gchemtable*.desktop
 %_datadir/gnome/help/gchemtable-%{api}
-%_datadir/icons/hicolor/*/apps/gchemtable.png
+%_datadir/gchemutils/%{api}/ui/table
+%_iconsdir/hicolor/*/apps/gchemtable.png
 %_mandir/man1/gchemtable.*
 %_datadir/omf/gchemtable-%{api}/gchemtable-%{api}-C.omf
 
@@ -239,12 +239,12 @@ GCrystal is a Crystal structure viewer.
 %defattr(-, root, root)
 %_sysconfdir/gconf/schemas/gcrystal.schemas
 %_bindir/gcrystal*
-%_datadir/gchemutils/%{api}/glade/crystal
 %_datadir/gchemutils/%{api}/pixmaps/gcrystal_logo.png
+%_datadir/gchemutils/%{api}/ui/crystal
 %_datadir/applications/gcrystal*.desktop
 %_datadir/gnome/help/gcrystal-%{api}
-%_datadir/icons/hicolor/*/apps/gcrystal.png
-%_datadir/icons/hicolor/*/mimetypes/gnome-mime-application-x-gcrystal.png
+%_iconsdir/hicolor/*/apps/gcrystal.png
+%_iconsdir/hicolor/*/mimetypes/application-x-gcrystal.png
 %_mandir/man1/gcrystal.*
 %_datadir/omf/gcrystal-%{api}/gcrystal-%{api}-C.omf
 
@@ -264,7 +264,7 @@ GSpectrum is a Spectrum viewer.
 %_bindir/gspectrum*
 %_datadir/applications/gspectrum*.desktop
 %_datadir/gnome/help/gspectrum-%{api}
-%_datadir/icons/hicolor/*/apps/gspectrum.png
+%_iconsdir/hicolor/*/apps/gspectrum.png
 %_mandir/man1/gspectrum.*
 %_datadir/omf/gspectrum-%{api}/gspectrum-%{api}-C.omf
 
@@ -316,11 +316,9 @@ developing chemistry related programs using %{name}.
 
 %prep
 %setup -q
-%patch1 -p1
-%patch2 -p1
 
 %build
-autoreconf -fi
+%define Werror_cflags %nil
 %configure2_5x \
 	--enable-static=no --disable-update-databases \
 	--disable-mozilla-plugin --disable-schemas-install \
@@ -342,7 +340,7 @@ chrpath --delete  %{buildroot}%{_bindir}/*
 chrpath --delete  %{buildroot}%{_libdir}/goffice/*/plugins/gchemutils/gchemutils.so
 chrpath --delete  %{buildroot}%{_libdir}/*.so.*
 
-%find_lang gchemutils-0.10
+%find_lang gchemutils-%{api}
 
 %clean
 rm -rf %{buildroot}
