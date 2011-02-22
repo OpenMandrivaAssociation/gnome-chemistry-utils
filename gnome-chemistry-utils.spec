@@ -270,13 +270,11 @@ GSpectrum is a Spectrum viewer.
 
 #--------------------------------------------------------------------
 
-%define goffice_ver %( rpm -q --whatprovides goffice-devel --queryformat %%{VERSION})
-
 %package goffice
 Summary:        GOffice plugin for gchemutils
 Group:          Sciences/Chemistry
 Requires:       gchempaint = %version
-Requires:	goffice = %goffice_ver
+Requires:	goffice
 
 %description goffice
 GOffice plugin for gchemutils.
