@@ -281,7 +281,7 @@ GOffice plugin for gchemutils.
 
 %files goffice
 %defattr(-, root, root)
-%_libdir/goffice/%{goffice_ver}/plugins/gchemutils
+%_libdir/goffice/*/plugins/gchemutils
 
 #--------------------------------------------------------------------
 
