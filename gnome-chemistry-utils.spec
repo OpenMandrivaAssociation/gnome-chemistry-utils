@@ -317,6 +317,7 @@ developing chemistry related programs using %{name}.
 
 %build
 %define Werror_cflags %nil
+export CXXFLAGS="%optflags -fpermissive"
 %configure2_5x \
 	--enable-static=no --disable-update-databases \
 	--disable-mozilla-plugin --disable-schemas-install \
