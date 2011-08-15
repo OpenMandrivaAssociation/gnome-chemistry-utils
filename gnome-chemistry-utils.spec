@@ -72,6 +72,7 @@ This package contains the common files ahred by different components of
 %files common -f gchemutils-%{api}.lang
 %defattr(-, root, root)
 %_sysconfdir/gconf/schemas/gchemutils.schemas
+%_datadir/glib-2.0/schemas/org.gnome.gchemutils.gschema.xml
 %dir %_libdir/gchemutils
 %dir %_libdir/gchemutils/%{api}
 %dir %_libdir/gchemutils/%{api}/plugins
@@ -146,6 +147,8 @@ Gnumeric and Abiword.
 %defattr(-, root, root)
 %_sysconfdir/gconf/schemas/gchempaint-arrows.schemas
 %_sysconfdir/gconf/schemas/gchempaint.schemas
+%_datadir/glib-2.0/schemas/org.gnome.gchemutils.paint.gschema.xml
+%_datadir/glib-2.0/schemas/org.gnome.gchemutils.paint.plugins.arrows.gschema.xml
 %_bindir/gchempaint*
 %_libdir/gchemutils/%{api}/plugins/paint
 %_datadir/applications/gchempaint*.desktop
@@ -237,6 +240,7 @@ GCrystal is a Crystal structure viewer.
 %files -n gcrystal
 %defattr(-, root, root)
 %_sysconfdir/gconf/schemas/gcrystal.schemas
+%_datadir/glib-2.0/schemas/org.gnome.gchemutils.crystal.gschema.xml
 %_bindir/gcrystal*
 %_datadir/gchemutils/%{api}/pixmaps/gcrystal_logo.png
 %_datadir/gchemutils/%{api}/ui/crystal
