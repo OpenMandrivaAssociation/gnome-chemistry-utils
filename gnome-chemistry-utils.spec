@@ -19,7 +19,7 @@ BuildRequires:	libgtkglext-devel
 BuildRequires:	pkgconfig(libgoffice-0.8)
 BuildRequires:	openbabel-devel >= 1.100.1
 BuildRequires:	libgnomeui2-devel
-BuildRequires:	libgnomeprintui2-2-devel
+BuildRequires:	pkgconfig(libgnomeprintui-2.2)
 BuildRequires:	gtk-doc
 BuildRequires:  perl-XML-Parser
 BuildRequires:  intltool
