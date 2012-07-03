@@ -1,10 +1,11 @@
-%define version 0.12.11
+%define version 0.13.7
 %define release %mkrel 1
 
-%define api	0.12
+%define api	0.14
 %define major 	0
 %define libname %mklibname gcu %{api} %{major}
 %define libgchempaint %mklibname gchempaint %{api} %{major}
+%define libgcrystal %mklibname gcrystal %{api} %{major}
 
 Summary:	Backend for Gnome chemistry applications
 Name:		gnome-chemistry-utils
@@ -16,7 +17,7 @@ URL:		http://www.nongnu.org/gchemutils/
 Source0:	http://download.savannah.nongnu.org/releases/gchemutils/%{api}/%{name}-%{version}.tar.xz
 BuildRequires:	libgnomeprint-devel
 BuildRequires:	libgtkglext-devel
-BuildRequires:	pkgconfig(libgoffice-0.8)
+BuildRequires:	pkgconfig(libgoffice-0.10)
 BuildRequires:	openbabel-devel >= 1.100.1
 BuildRequires:	libgnomeui2-devel
 BuildRequires:	pkgconfig(libgnomeprintui-2.2)
@@ -25,7 +26,7 @@ BuildRequires:  perl-XML-Parser
 BuildRequires:  intltool
 BuildRequires:  chemical-mime-data
 BuildRequires:	bodr
-BuildRequires:	gnome-doc-utils
+BuildRequires:	pkgconfig(gnome-doc-utils)
 BuildRequires:	chrpath
 Provides:	gcu = %{EVRD}
 Provides:	gchemutils = %{EVRD}
@@ -70,7 +71,7 @@ This package contains the common files ahred by different components of
 
 %files common -f gchemutils-%{api}.lang
 %defattr(-, root, root)
-%{_sysconfdir}/gconf/schemas/gchemutils.schemas
+#%{_sysconfdir}/gconf/schemas/gchemutils.schemas
 %{_datadir}/glib-2.0/schemas/org.gnome.gchemutils.gschema.xml
 %dir %{_libdir}/gchemutils
 %dir %{_libdir}/gchemutils/%{api}
@@ -79,6 +80,8 @@ This package contains the common files ahred by different components of
 %{_libdir}/gchemutils/%{api}/plugins/cdxml
 %{_libdir}/gchemutils/%{api}/plugins/cif
 %{_libdir}/gchemutils/%{api}/plugins/cml
+%{_libdir}/gchemutils/%{api}/plugins/ctfiles
+%{_libdir}/gchemutils/%{api}/plugins/nuts
 %dir %{_datadir}/gchemutils
 %dir %{_datadir}/gchemutils/%{api}
 %{_datadir}/gchemutils/%{api}/*.xml
@@ -86,6 +89,7 @@ This package contains the common files ahred by different components of
 %dir %{_datadir}/gchemutils/%{api}/ui
 %{_datadir}/gchemutils/%{api}/ui/libgcu
 %{_datadir}/mime/packages/*.xml
+%{_libdir}/babelserver
 
 #--------------------------------------------------------------------
 
@@ -104,6 +108,7 @@ linked with %{name}.
 %files -n %{libname}
 %defattr(-, root, root)
 %{_libdir}/libgcu-%{api}.so.%{major}*
+%{_libdir}/libgcugtk-%{api}.so.%{major}*
 
 #--------------------------------------------------------------------
 
@@ -126,6 +131,24 @@ linked with gchempaint.
 
 #--------------------------------------------------------------------
 
+%package -n %{libgcrystal}
+Summary:        Libraries for gchempaint
+Group:          System/Libraries
+
+%description -n %{libgcrystal}
+The Gnome Chemistry Utils provide C++ classes and GTK2 widgets related to
+chemistry. They are currently used in Gnome Crystal (gcrystal) and Gnome
+Chemistry Paint (gchempaint).
+
+This package contains the library needed to run programs dynamically
+linked with gcrystal.
+
+%files -n %{libgcrystal}
+%defattr(-, root, root)
+%{_libdir}//libgcrystal-%{api}.so.%{major}*
+
+#--------------------------------------------------------------------
+
 %package -n gchempaint
 Summary:        GNOME 2D chemical structure drawing tool
 Group:          Sciences/Chemistry
@@ -144,20 +167,20 @@ Gnumeric and Abiword.
 
 %files -n gchempaint
 %defattr(-, root, root)
-%{_sysconfdir}/gconf/schemas/gchempaint-arrows.schemas
-%{_sysconfdir}/gconf/schemas/gchempaint.schemas
+#%{_sysconfdir}/gconf/schemas/gchempaint-arrows.schemas
+#%{_sysconfdir}/gconf/schemas/gchempaint.schemas
 %{_datadir}/glib-2.0/schemas/org.gnome.gchemutils.paint.gschema.xml
 %{_datadir}/glib-2.0/schemas/org.gnome.gchemutils.paint.plugins.arrows.gschema.xml
 %{_bindir}/gchempaint*
 %{_libdir}/gchemutils/%{api}/plugins/paint
 %{_datadir}/applications/gchempaint*.desktop
 %{_datadir}/gchemutils/%{api}/paint
-%{_datadir}/gchemutils/%{api}/pixmaps/gchempaint_logo.png
+%{_datadir}/gchemutils/%{api}/pixmaps/gchempaint_logo.*
 %{_datadir}/gchemutils/%{api}/ui/paint
 %{_datadir}/gnome/help/gchempaint-%{api}
-%{_iconsdir}/hicolor/*/apps/gchempaint.png
-%{_iconsdir}/hicolor/*/mimetypes/application-x-gchempaint.png
-%{_mandir}/man1/gchempaint.*
+%{_iconsdir}/hicolor/*/apps/gchempaint.*
+%{_iconsdir}/hicolor/*/mimetypes/application-x-gchempaint.*
+%{_mandir}/man1/gchempaint*
 %{_datadir}/omf/gchempaint-%{api}/gchempaint-%{api}-C.omf
 
 #--------------------------------------------------------------------
@@ -176,8 +199,8 @@ GChem3Viewer is a 3D molecular structure viewer.
 %{_bindir}/gchem3d*
 %{_datadir}/applications/gchem3d*.desktop
 %{_datadir}/gnome/help/gchem3d-%{api}
-%{_iconsdir}/hicolor/*/apps/gchem3d.png
-%{_mandir}/man1/gchem3d.*
+%{_iconsdir}/hicolor/*/apps/gchem3d.*
+%{_mandir}/man1/gchem3d*
 %{_datadir}/omf/gchem3d-%{api}/gchem3d-%{api}-C.omf
 
 #--------------------------------------------------------------------
@@ -197,8 +220,8 @@ GChemCalc is a Chemical calculator.
 %{_datadir}/applications/gchemcalc*.desktop
 %{_datadir}/gchemutils/%{api}/ui/calc
 %{_datadir}/gnome/help/gchemcalc-%{api}
-%{_iconsdir}/hicolor/*/apps/gchemcalc.png
-%{_mandir}/man1/gchemcalc.*
+%{_iconsdir}/hicolor/*/apps/gchemcalc.*
+%{_mandir}/man1/gchemcalc*
 %{_datadir}/omf/gchemcalc-%{api}/gchemcalc-%{api}-C.omf
 
 #--------------------------------------------------------------------
@@ -218,8 +241,8 @@ GChemTable is a periodic table of the elements application.
 %{_datadir}/applications/gchemtable*.desktop
 %{_datadir}/gnome/help/gchemtable-%{api}
 %{_datadir}/gchemutils/%{api}/ui/table
-%{_iconsdir}/hicolor/*/apps/gchemtable.png
-%{_mandir}/man1/gchemtable.*
+%{_iconsdir}/hicolor/*/apps/gchemtable.*
+%{_mandir}/man1/gchemtable*
 %{_datadir}/omf/gchemtable-%{api}/gchemtable-%{api}-C.omf
 
 #--------------------------------------------------------------------
@@ -238,16 +261,16 @@ GCrystal is a Crystal structure viewer.
 
 %files -n gcrystal
 %defattr(-, root, root)
-%{_sysconfdir}/gconf/schemas/gcrystal.schemas
+#%{_sysconfdir}/gconf/schemas/gcrystal.schemas
 %{_datadir}/glib-2.0/schemas/org.gnome.gchemutils.crystal.gschema.xml
 %{_bindir}/gcrystal*
 %{_datadir}/gchemutils/%{api}/pixmaps/gcrystal_logo.png
 %{_datadir}/gchemutils/%{api}/ui/crystal
 %{_datadir}/applications/gcrystal*.desktop
 %{_datadir}/gnome/help/gcrystal-%{api}
-%{_iconsdir}/hicolor/*/apps/gcrystal.png
-%{_iconsdir}/hicolor/*/mimetypes/application-x-gcrystal.png
-%{_mandir}/man1/gcrystal.*
+%{_iconsdir}/hicolor/*/apps/gcrystal.*
+%{_iconsdir}/hicolor/*/mimetypes/application-x-gcrystal.*
+%{_mandir}/man1/gcrystal*
 %{_datadir}/omf/gcrystal-%{api}/gcrystal-%{api}-C.omf
 
 #--------------------------------------------------------------------
@@ -266,8 +289,8 @@ GSpectrum is a Spectrum viewer.
 %{_bindir}/gspectrum*
 %{_datadir}/applications/gspectrum*.desktop
 %{_datadir}/gnome/help/gspectrum-%{api}
-%{_iconsdir}/hicolor/*/apps/gspectrum.png
-%{_mandir}/man1/gspectrum.*
+%{_iconsdir}/hicolor/*/apps/gspectrum.*
+%{_mandir}/man1/gspectrum*
 %{_datadir}/omf/gspectrum-%{api}/gspectrum-%{api}-C.omf
 
 #--------------------------------------------------------------------
