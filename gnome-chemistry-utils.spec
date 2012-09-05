@@ -1,6 +1,3 @@
-%define version 0.13.7
-%define release %mkrel 1
-
 %define api	0.14
 %define major 	0
 %define libname %mklibname gcu %{api} %{major}
@@ -9,8 +6,8 @@
 
 Summary:	Backend for Gnome chemistry applications
 Name:		gnome-chemistry-utils
-Version:	%{version}
-Release:	%{release}
+Version:	0.13.92
+Release:	1
 License:	LGPLv2+
 Group:		Sciences/Chemistry
 URL:		http://www.nongnu.org/gchemutils/
@@ -315,6 +312,7 @@ Summary:	Development related files of %{name}
 Group:		Development/GNOME and GTK+
 Requires:	%{libname} = %{EVRD}
 Requires:	%{libgchempaint} = %{EVRD}
+Requires:	%{libgcrystal} = %{EVRD}
 Provides:	gcu-devel = %{EVRD}
 Provides:	gchemutils-devel = %{EVRD}
 Provides:	gchempaint-devel = %{EVRD}
