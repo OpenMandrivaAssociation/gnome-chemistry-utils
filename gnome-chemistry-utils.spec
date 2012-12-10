@@ -362,3 +362,317 @@ chrpath --delete  %{buildroot}%{_libdir}/goffice/*/plugins/gchemutils/gchemutils
 chrpath --delete  %{buildroot}%{_libdir}/*.so.*
 
 %find_lang gchemutils-%{api}
+
+
+%changelog
+* Wed Sep 05 2012 Dmitry Mikhirev <dmikhirev@mandriva.org> 0.13.92-1
++ Revision: 816392
+- update to 0.13.92
+
+* Tue Jul 03 2012 Dmitry Mikhirev <dmikhirev@mandriva.org> 0.13.7-1
++ Revision: 807967
+- update to 0.13.7 unstable release
+
+* Thu Apr 26 2012 Dmitry Mikhirev <dmikhirev@mandriva.org> 0.12.11-1
++ Revision: 793503
+- update to 0.12.11
+
+  + Funda Wang <fwang@mandriva.org>
+    - new version 0.12.10
+
+* Mon Aug 15 2011 Funda Wang <fwang@mandriva.org> 0.12.9-1
++ Revision: 694572
+- update file list
+- new version 0.12.9
+
+* Sun May 22 2011 Funda Wang <fwang@mandriva.org> 0.12.8-2
++ Revision: 676971
+- rebuild for new goffice
+
+* Wed May 11 2011 Funda Wang <fwang@mandriva.org> 0.12.8-1
++ Revision: 673396
+- update to new version 0.12.8
+
+* Sat May 07 2011 Funda Wang <fwang@mandriva.org> 0.12.7-2
++ Revision: 672317
+- use -fpermissive
+- rebuild
+
+* Tue Feb 22 2011 Funda Wang <fwang@mandriva.org> 0.12.7-1
++ Revision: 639250
+- update file list
+- drop requires
+- new version 0.12.7
+
+* Mon Jan 03 2011 Funda Wang <fwang@mandriva.org> 0.12.6-1mdv2011.0
++ Revision: 627667
+- 0.12.6
+
+* Thu Dec 02 2010 Funda Wang <fwang@mandriva.org> 0.12.5-2mdv2011.0
++ Revision: 604683
+- rebuild for bs monster
+
+* Fri Nov 26 2010 Funda Wang <fwang@mandriva.org> 0.12.5-1mdv2011.0
++ Revision: 601500
+- update to new version 0.12.5
+
+* Wed Oct 06 2010 Funda Wang <fwang@mandriva.org> 0.12.4-2mdv2011.0
++ Revision: 583368
+- rebuild
+
+* Mon Sep 27 2010 Funda Wang <fwang@mandriva.org> 0.12.4-1mdv2011.0
++ Revision: 581200
+- update to new version 0.12.4
+
+* Sun Sep 05 2010 Funda Wang <fwang@mandriva.org> 0.12.3-1mdv2011.0
++ Revision: 576058
+- new version 0.12.3
+
+* Sun Sep 05 2010 Funda Wang <fwang@mandriva.org> 0.12.2-3mdv2011.0
++ Revision: 576041
+- rebuild for new goffice
+
+* Sat Aug 07 2010 Funda Wang <fwang@mandriva.org> 0.12.2-2mdv2011.0
++ Revision: 567409
+- rebuild for new goffice
+
+* Sat Jul 24 2010 Funda Wang <fwang@mandriva.org> 0.12.2-1mdv2011.0
++ Revision: 557893
+- New version 0.12.2
+
+* Sat Apr 17 2010 Funda Wang <fwang@mandriva.org> 0.10.12-2mdv2010.1
++ Revision: 536038
+- rebuild for new goffice
+
+* Sun Feb 28 2010 Funda Wang <fwang@mandriva.org> 0.10.12-1mdv2010.1
++ Revision: 512703
+- new version 0.10.12
+
+* Sun Feb 14 2010 G√∂tz Waschk <waschk@mandriva.org> 0.10.11-2mdv2010.1
++ Revision: 505830
+- rebuild for new goffice
+
+* Wed Feb 03 2010 Funda Wang <fwang@mandriva.org> 0.10.11-1mdv2010.1
++ Revision: 500358
+- New version 0.10.11
+
+* Mon Jan 25 2010 Funda Wang <fwang@mandriva.org> 0.10.10-2mdv2010.1
++ Revision: 496277
+- rebuild for new goffice
+
+* Thu Dec 31 2009 Funda Wang <fwang@mandriva.org> 0.10.10-1mdv2010.1
++ Revision: 484506
+- fix linkage
+- new version 0.10.10
+
+* Wed Dec 16 2009 Funda Wang <fwang@mandriva.org> 0.10.9-3mdv2010.1
++ Revision: 479460
+- rebuild for new goffice
+
+* Mon Nov 30 2009 Funda Wang <fwang@mandriva.org> 0.10.9-2mdv2010.1
++ Revision: 471623
+- add upstream patch to build with latest goffice
+- rebuild for new goffice
+
+* Sun Nov 15 2009 Funda Wang <fwang@mandriva.org> 0.10.9-1mdv2010.1
++ Revision: 466121
+- new version 0.10.9
+
+* Tue Nov 10 2009 Funda Wang <fwang@mandriva.org> 0.10.8-4mdv2010.1
++ Revision: 463997
+- rebuild for new goffice
+
+* Mon Oct 12 2009 Funda Wang <fwang@mandriva.org> 0.10.8-3mdv2010.0
++ Revision: 456813
+- rebuild for new goffice
+
+* Tue Oct 06 2009 Funda Wang <fwang@mandriva.org> 0.10.8-2mdv2010.0
++ Revision: 454557
+- rebuild for new goffice
+
+* Mon Sep 07 2009 Frederik Himpe <fhimpe@mandriva.org> 0.10.8-1mdv2010.0
++ Revision: 432936
+- Update to new versio n0.10.8
+- Fix string format patch
+
+  + Funda Wang <fwang@mandriva.org>
+    - rebuild for new goffice
+
+* Sun Aug 16 2009 Funda Wang <fwang@mandriva.org> 0.10.5-2mdv2010.0
++ Revision: 416885
+- rebuild for new goffice
+
+* Sun Jul 05 2009 Frederik Himpe <fhimpe@mandriva.org> 0.10.5-1mdv2010.0
++ Revision: 392596
+- update to new version 0.10.5
+
+  + Funda Wang <fwang@mandriva.org>
+    - rebuild
+
+* Thu Apr 23 2009 Frederic Crozat <fcrozat@mandriva.com> 0.10.4-2mdv2009.1
++ Revision: 368869
+- Rebuild
+
+* Thu Mar 19 2009 Funda Wang <fwang@mandriva.org> 0.10.4-1mdv2009.1
++ Revision: 357639
+- New version 0.10.4
+
+* Thu Jan 08 2009 Funda Wang <fwang@mandriva.org> 0.10.3-1mdv2009.1
++ Revision: 327120
+- New version 0.10.3
+
+* Sun Nov 30 2008 Funda Wang <fwang@mandriva.org> 0.10.2-1mdv2009.1
++ Revision: 308407
+- new version 0.10.2
+
+* Fri Nov 28 2008 Funda Wang <fwang@mandriva.org> 0.10.1-3mdv2009.1
++ Revision: 307456
+- fix requires
+
+* Sun Nov 16 2008 Funda Wang <fwang@mandriva.org> 0.10.1-2mdv2009.1
++ Revision: 303670
+- the configure script does not accept chrpath
+- move gchempaint plugins into correct pacakge
+- goffice plugin actually belongs to gchempaint
+
+* Sun Nov 16 2008 Funda Wang <fwang@mandriva.org> 0.10.1-1mdv2009.1
++ Revision: 303649
+- refactor g-c-u, one package per tool
+- New version 0.10.1
+
+* Mon Aug 11 2008 Emmanuel Andry <eandry@mandriva.org> 0.8.7-3mdv2009.0
++ Revision: 270697
+- Rebuild for openbabel
+
+* Thu Aug 07 2008 Thierry Vignaud <tv@mandriva.org> 0.8.7-2mdv2009.0
++ Revision: 266910
+- rebuild early 2009.0 package (before pixel changes)
+
+  + Pixel <pixel@mandriva.com>
+    - rpm filetriggers deprecates update_menus/update_scrollkeeper/update_mime_database/update_icon_cache/update_desktop_database/post_install_gconf_schemas
+    - do not call ldconfig in %%post/%%postun, it is now handled by filetriggers
+
+* Wed Apr 16 2008 Funda Wang <fwang@mandriva.org> 0.8.7-1mdv2009.0
++ Revision: 194515
+- New version 0.8.7
+
+  + Thierry Vignaud <tv@mandriva.org>
+    - fix description-line-too-long
+
+* Sat Jan 26 2008 Funda Wang <fwang@mandriva.org> 0.8.6-1mdv2008.1
++ Revision: 158360
+- remove wrongly added files
+- New version 0.8.6
+
+* Sun Dec 23 2007 Funda Wang <fwang@mandriva.org> 0.8.5-1mdv2008.1
++ Revision: 137270
+- New version 0.8.5
+
+  + Olivier Blin <blino@mandriva.org>
+    - restore BuildRoot
+
+  + Thierry Vignaud <tv@mandriva.org>
+    - kill re-definition of %%buildroot on Pixel's request
+
+* Sat Nov 17 2007 Funda Wang <fwang@mandriva.org> 0.8.4-2mdv2008.1
++ Revision: 109262
+- rebuild for new lzma
+
+* Sun Nov 04 2007 Funda Wang <fwang@mandriva.org> 0.8.4-1mdv2008.1
++ Revision: 105590
+- update icon cache
+- BR goffice 0.4
+- clearify libmajor
+- New version 0.8.4
+- Rebuild against goffice 0.5
+
+* Tue Jul 31 2007 Funda Wang <fwang@mandriva.org> 0.8.2-1mdv2008.0
++ Revision: 56839
+- fix file list
+- disable scrollkeeper update when building
+- fix man page list
+- New version 0.8.2
+
+* Wed Jul 04 2007 Funda Wang <fwang@mandriva.org> 0.8.1-2mdv2008.0
++ Revision: 47798
+- fix develpacakge requires
+
+* Tue Jul 03 2007 Funda Wang <fwang@mandriva.org> 0.8.1-1mdv2008.0
++ Revision: 47551
+- fix file list
+- Corrected desktop file
+- New version
+
+* Sun May 27 2007 Funda Wang <fwang@mandriva.org> 0.8.0-1mdv2008.0
++ Revision: 31766
+- New upstream version
+
+* Thu May 10 2007 Austin Acton <austin@mandriva.org> 0.7.96-1mdv2008.0
++ Revision: 26174
+- buildrequires gnome-doc-utils
+- move to beta branch
+- gconf schemas
+- new version
+
+
+* Mon Feb 26 2007 Emmanuel Andry <eandry@mandriva.org> 0.6.4-2mdv2007.0
++ Revision: 125727
+- fix datadir path
+
+* Sun Feb 25 2007 Emmanuel Andry <eandry@mandriva.org> 0.6.4-1mdv2007.1
++ Revision: 125625
+- buildrequires goffice21-devel
+- New version 0.6.4
+- xdg menu
+
+  + J√©r√¥me Soyer <saispo@mandriva.org>
+    - Import gnome-chemistry-utils
+
+* Thu Sep 14 2006 Nicolas LÈcureuil <neoclust@mandriva.org> 0.6.1-2mdv2007.0
+- - Rebuild against DBUS
+
+* Wed Apr 05 2006 Lenny Cartier <lenny@mandriva.com> 0.6.1-1mdk
+- 0.6.1
+
+* Sat Apr 01 2006 Austin Acton <austin@mandriva.org> 0.6.0-1mdk
+- New release 0.6.0
+- buildrequires goffice
+- mozilla plugin doesn't seem to build
+
+* Tue Feb 14 2006 Nicolas LÈcureuil <neoclust@mandriva.org> 0.4.8-3mdk
+- Fix BuildRequires
+
+* Mon Feb 13 2006 Frederic Crozat <fcrozat@mandriva.com> 0.4.8-2mdk
+- Don't package mime cache
+- fix mime cache update
+
+* Thu Feb 09 2006 Lenny Cartier <lenny@mandriva.com> 0.4.8-1mdk
+- 0.4.8
+
+* Sun Aug 14 2005 Austin Acton <austin@mandriva.org> 0.4.4-2mdk
+- drop libtoolize hack
+- I guess it's just major version 0
+
+* Sun Aug 14 2005 Austin Acton <austin@mandriva.org> 0.4.4-1mdk
+- New release 0.4.4
+
+* Sun Jun 19 2005 Austin Acton <austin@mandriva.org> 0.4.3-1mdk
+- New release 0.4.3
+- source URL fix
+
+* Wed Jan 05 2005 Frederic Crozat <fcrozat@mandrakesoft.com> 0.3.2-2mdk 
+- Rebuild with latest howl
+
+* Mon Dec 13 2004 Austin Acton <austin@mandrake.org> 0.3.2-1mdk
+- 0.3.2
+
+* Sun Oct 10 2004 Austin Acton <austin@mandrake.org> 0.3.1-1mdk
+- 0.3.1
+- major 0.3
+
+* Mon Aug 09 2004 Austin Acton <austin@mandrake.org> 0.3.0-1mdk
+- 0.3.0
+
+* Sun Jun 06 2004 Austin Acton <austin@mandrake.org> 0.2.5-1mdk
+- 0.2.5
+
