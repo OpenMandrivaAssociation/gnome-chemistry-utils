@@ -18,6 +18,7 @@ BuildRequires:	chrpath
 BuildRequires:	gtk-doc
 BuildRequires:	intltool
 BuildRequires:	perl-XML-Parser
+BuildRequires:	pkgconfig(glu)
 BuildRequires:	pkgconfig(gnome-doc-utils)
 BuildRequires:	pkgconfig(gtk+-3.0)
 BuildRequires:	pkgconfig(libgoffice-0.10)
