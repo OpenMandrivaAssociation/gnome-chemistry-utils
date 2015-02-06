@@ -7,7 +7,7 @@
 Summary:	Backend for Gnome chemistry applications
 Name:		gnome-chemistry-utils
 Version:	0.14.5
-Release:	1
+Release:	2
 License:	LGPLv2+
 Group:		Sciences/Chemistry
 Url:		http://www.nongnu.org/gchemutils/
