@@ -10,7 +10,7 @@ Version:	0.14.5
 Release:	2
 License:	LGPLv2+
 Group:		Sciences/Chemistry
-Url:		http://www.nongnu.org/gchemutils/
+Url:		https://www.nongnu.org/gchemutils/
 Source0:	http://download.savannah.nongnu.org/releases/gchemutils/%{api}/%{name}-%{version}.tar.xz
 BuildRequires:	bodr
 BuildRequires:	chemical-mime-data
